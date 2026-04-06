@@ -14,8 +14,14 @@ services:
     restart: always
     networks:
       - movie-network # Connects to the shared bridge
+      - mlflow-network
+      - langfuse-network
 
 # Tells Nginx the bridge already exists (created by your other apps)
 networks:
   movie-network:
+    external: true
+  langfuse-network:
+    external: true
+  mlflow-network:
     external: true
