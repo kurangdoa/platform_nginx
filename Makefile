@@ -53,4 +53,4 @@ cert_init_mlflow:
 	  --no-eff-email
 
 # Runs all three certbot commands sequentially
-cert_init_all: cert_init_frontend cert_langfuse cert_mlflow
+cert_init_all: cert_init_frontend cert_init_langfuse cert_init_mlflow
