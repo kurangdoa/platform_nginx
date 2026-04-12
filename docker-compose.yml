@@ -17,6 +17,16 @@ services:
       - mlflow-network
       - langfuse-network
 
+  certbot:
+    image: certbot/certbot
+    container_name: certbot-renewer
+    restart: unless-stopped
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    # This command wakes up every 12 hours, tries to renew, and goes back to sleep
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
 # Tells Nginx the bridge already exists (created by your other apps)
 networks:
   movie-network:
