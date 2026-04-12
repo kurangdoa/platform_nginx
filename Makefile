@@ -19,7 +19,7 @@ down:
 down_start:	
 	docker compose -f $(COMPOSE_FILE_START) down
 
-cert-init-frontend:
+cert_init_frontend:
 	docker run -it --rm --name certbot \
 	  -v "$$(pwd)/certbot/conf:/etc/letsencrypt" \
 	  -v "$$(pwd)/certbot/www:/var/www/certbot" \
@@ -30,7 +30,7 @@ cert-init-frontend:
 	  --agree-tos \
 	  --no-eff-email
 
-cert-init-langfuse:
+cert_init_langfuse:
 	docker run -it --rm --name certbot \
 	  -v "$$(pwd)/certbot/conf:/etc/letsencrypt" \
 	  -v "$$(pwd)/certbot/www:/var/www/certbot" \
@@ -41,7 +41,7 @@ cert-init-langfuse:
 	  --agree-tos \
 	  --no-eff-email
 
-cert-init-mlflow:
+cert_init_mlflow:
 	docker run -it --rm --name certbot \
 	  -v "$$(pwd)/certbot/conf:/etc/letsencrypt" \
 	  -v "$$(pwd)/certbot/www:/var/www/certbot" \
@@ -53,4 +53,4 @@ cert-init-mlflow:
 	  --no-eff-email
 
 # Runs all three certbot commands sequentially
-cert-init-all: cert-frontend cert-langfuse cert-mlflow
+cert_init_all: cert_init_frontend cert_langfuse cert_mlflow
