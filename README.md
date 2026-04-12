@@ -1,7 +1,7 @@
 # platform_nginx
 nginx deployment for kurangdoa platform
 
-### 🔒 SSL & The "Chicken and Egg" Nginx Problem
+## 🔒 SSL & The "Chicken and Egg" Nginx Problem
 
 When setting up this project on a new server for the first time, you will run into a classic "Chicken and Egg" problem with Nginx and Let's Encrypt (Certbot).
 
@@ -12,16 +12,37 @@ When setting up this project on a new server for the first time, you will run in
 **The Solution: The 3-Step Dance**
 To successfully deploy this, you must run the setup in three stages:
 
-#### Step 1: Start with HTTP Only
+### Step 1: Start with HTTP Only
 Before running `docker compose up -d` for the Proxy Gateway, open the `nginx.conf` file and make sure the HTTPS (`listen 443 ssl;`) server blocks are completely commented out (hidden behind `#` symbols). 
 
 Start the containers. Nginx will boot up happily on port 80.
 
-#### Step 2: Generate the Certificates
+This is made simple with the `make up_start`
+
+### Step 2: Generate the Certificates
 With Nginx running on port 80, run your Certbot command. Certbot will safely talk to Let's Encrypt, verify your domain, and download the `.pem` certificate files onto your server.
 
-#### Step 3: Activate HTTPS
+#### the certbot command looks like this
+```
+docker run -it --rm --name certbot \
+  -v "$(pwd)/certbot/conf:/etc/letsencrypt" \
+  -v "$(pwd)/certbot/www:/var/www/certbot" \
+  certbot/certbot certonly \
+  --webroot -w /var/www/certbot \
+  -d movie-trip.kurangdoa.com \
+  -d langfuse.kurangdoa.com \
+  -d mlflow.kurangdoa.com \
+  --email rando.bayor@gmail.com \
+  --agree-tos \
+  --no-eff-email
+```
+
+### Step 3: Activate HTTPS
 Now that the certificate files actually exist on your hard drive, open `nginx.conf` again and **uncomment** the HTTPS blocks (remove the `#` symbols). 
+
+or made simple by doing `make up`
+
+### restart if needed
 
 Restart Nginx to apply the changes:
 ```bash
