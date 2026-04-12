@@ -30,11 +30,18 @@ docker run -it --rm --name certbot \
   certbot/certbot certonly \
   --webroot -w /var/www/certbot \
   -d movie-trip.kurangdoa.com \
-  -d langfuse.kurangdoa.com \
-  -d mlflow.kurangdoa.com \
   --email rando.bayor@gmail.com \
   --agree-tos \
   --no-eff-email
+```
+
+or made simple with `make cert-init-all`
+
+#### restart nginx
+
+Restart Nginx to apply the changes:
+```bash
+docker compose restart nginx
 ```
 
 ### Step 3: Activate HTTPS
@@ -42,8 +49,3 @@ Now that the certificate files actually exist on your hard drive, open `nginx.co
 
 or made simple by doing `make up`
 
-### restart if needed
-
-Restart Nginx to apply the changes:
-```bash
-docker compose restart nginx
