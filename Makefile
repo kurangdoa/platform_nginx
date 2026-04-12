@@ -1,6 +1,6 @@
 # Variables
-COMPOSE_FILE=docker-compose.yaml
-COMPOSE_FILE_START=docker-compose-start.yaml
+COMPOSE_FILE=docker-compose.yml
+COMPOSE_FILE_START=docker-compose-start.yml
 
 .PHONY: up down restart status logs shell clean heartbeat
 
