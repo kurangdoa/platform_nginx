@@ -1,0 +1,27 @@
+# /proxy-gateway/docker-compose.yml
+
+services:
+  nginx:
+    container_name: global-nginx
+    image: nginx:latest
+    ports:
+      - "80:80"       # HTTP
+      - "443:443"     # HTTPS
+    volumes:
+      - ./__nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt   # SSL Certificates
+      - ./certbot/www:/var/www/certbot    # SSL Validation
+    restart: always
+    networks:
+      - movie-network # Connects to the shared bridge
+      - mlflow-network
+      - langfuse-network
+
+# Tells Nginx the bridge already exists (created by your other apps)
+networks:
+  movie-network:
+    external: true
+  langfuse-network:
+    external: true
+  mlflow-network:
+    external: true
