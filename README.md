@@ -47,5 +47,5 @@ docker compose restart nginx
 ### Step 3: Activate HTTPS
 Now that the certificate files actually exist on your hard drive, open `nginx.conf` again and **uncomment** the HTTPS blocks (remove the `#` symbols). 
 
-or made simple by doing `make up`
+or made simple by doing `make down_start` and then `make up`
 
